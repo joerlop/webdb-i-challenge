@@ -2,11 +2,13 @@ const express = require('express');
 
 const server = express();
 
+server.use(express.json());
+
 // your code here
 
 const db = require("./data/accounts-model")
 
-server.post("/api/acounts/", (req, res) => {
+server.post("/api/accounts/", (req, res) => {
   const account = req.body;
 
   db.add(account)
@@ -20,10 +22,10 @@ server.post("/api/acounts/", (req, res) => {
     });
 });
 
-server.get("/api/acounts/", (req, res) => {
+server.get("/api/accounts/", (req, res) => {
   db.find()
     .then(accounts => {
-      res.status(201).json(accounts);
+      res.status(200).json(accounts);
     })
     .catch(err => {
       res.status(500).json({
@@ -32,12 +34,12 @@ server.get("/api/acounts/", (req, res) => {
     });
 });
 
-server.get("/api/acounts/:id", (req, res) => {
+server.get("/api/accounts/:id", (req, res) => {
   const id = req.params.id;
 
   db.findById(id)
     .then(account => {
-      res.status(201).json(account);
+      res.status(200).json(account);
     })
     .catch(err => {
       res.status(500).json({
@@ -46,12 +48,12 @@ server.get("/api/acounts/:id", (req, res) => {
     });
 });
 
-server.delete("/api/acounts/:id", (req, res) => {
+server.delete("/api/accounts/:id", (req, res) => {
   const id = req.params.id;
 
   db.remove(id)
     .then(number => {
-      res.status(201).json(number);
+      res.status(200).json(number);
     })
     .catch(err => {
       res.status(500).json({
@@ -60,13 +62,13 @@ server.delete("/api/acounts/:id", (req, res) => {
     });
 });
 
-server.put("/api/acounts/:id", (req, res) => {
+server.put("/api/accounts/:id", (req, res) => {
   const id = req.params.id;
   const updates = req.body;
 
-  db.remove(id, updates)
+  db.update(id, updates)
     .then(number => {
-      res.status(201).json(number);
+      res.status(200).json(number);
     })
     .catch(err => {
       res.status(500).json({
